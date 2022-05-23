@@ -74,6 +74,18 @@ async function run() {
 
         });
 
+        app.get("/my-orders", async (req, res) => {
+
+            const user = req.query.customerEmail
+
+            const q = { customerEmail: user };
+
+            const result = await bookingCollection.find(q).toArray();
+
+            res.send(result);
+
+        })
+
     }
     finally {
 
