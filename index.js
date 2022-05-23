@@ -19,6 +19,7 @@ async function run() {
 
         await client.connect();
         const productCollection = client.db("credible_technologies").collection('products');
+        const bookingCollection = client.db("credible_technologies").collection('bookings');
 
         app.get("/all-products", async (req, res) => {
 
@@ -37,6 +38,16 @@ async function run() {
             const product = await productCollection.findOne(q);
 
             res.send(product);
+
+        });
+
+        app.post('/order-bookings', async (req, res) => {
+
+            const order = req.body;
+
+            const result = await bookingCollection.insertOne(order);
+
+            res.send(result);
 
         })
 
