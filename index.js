@@ -112,7 +112,15 @@ async function run() {
                 return res.status(403).send({ message: 'Forbidden access' })
             }
 
-        })
+        });
+
+        app.get('/all-users', verifyJWT, async (req, res) => {
+
+            const users = await userCollection.find().toArray();
+
+            res.send(users);
+
+        });
 
     }
     finally {
