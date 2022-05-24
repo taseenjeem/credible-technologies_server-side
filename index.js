@@ -41,6 +41,7 @@ async function run() {
         const productCollection = client.db("credible_technologies").collection('products');
         const bookingCollection = client.db("credible_technologies").collection('bookings');
         const userCollection = client.db("credible_technologies").collection('users');
+        const reviewCollection = client.db("credible_technologies").collection('reviews');
 
         app.get("/all-products", async (req, res) => {
 
@@ -175,6 +176,14 @@ async function run() {
             const product = req.body;
 
             const result = await productCollection.insertOne(product);
+
+            res.send(result);
+
+        });
+
+        app.get("/all-reviews", async (req, res) => {
+
+            const result = await reviewCollection.find({}).toArray();
 
             res.send(result);
 
