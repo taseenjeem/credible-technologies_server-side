@@ -162,6 +162,14 @@ async function run() {
 
         });
 
+        app.get("/ordered-products", async (req, res) => {
+
+            const result = await bookingCollection.find({}).toArray();
+
+            res.send(result);
+
+        })
+
     }
     finally {
 
