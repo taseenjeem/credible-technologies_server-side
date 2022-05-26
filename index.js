@@ -353,7 +353,7 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-    res.send("Credible Technologies Ltd. Server");
+    res.send("Credible Technologies Ltd.");
 });
 
 app.listen(port, () => {
