@@ -297,6 +297,20 @@ async function run() {
             const updatedBooking = await bookingCollection.updateOne(filter, updatedDoc);
             res.send(updatedBooking);
         });
+
+
+        app.delete('/delete-order/:id', async (req, res) => {
+
+            const id = req.params.id;
+
+            const q = { _id: ObjectId(id) };
+
+            const result = await bookingCollection.deleteOne(q);
+
+            res.send(result);
+
+        });
+
     }
     finally {
 
