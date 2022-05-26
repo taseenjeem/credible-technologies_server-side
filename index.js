@@ -117,12 +117,43 @@ async function run() {
 
         });
 
-        app.get('/all-users', verifyJWT, async (req, res) => {
+        app.get('/all-users', async (req, res) => {
 
             const users = await userCollection.find().toArray();
 
             res.send(users);
 
+        });
+
+        app.get("/user", async (req, res) => {
+
+            const user = req.query.email;
+
+            const q = { email: user };
+
+            const result = await userCollection.find(q).toArray();
+
+            res.send(result);
+
+        });
+
+        app.put('/update-a-profile/:id', async (req, res) => {
+
+            const id = req.params.id;
+
+            const data = req.body;
+
+            const filter = { _id: ObjectId(id) };
+
+            const options = { upsert: true };
+
+            const updatedDoc = {
+                $set: data
+            };
+
+            const result = await userCollection.updateOne(filter, updatedDoc, options);
+
+            res.send(result)
         });
 
         app.put('/user/admin/:email', verifyJWT, async (req, res) => {
