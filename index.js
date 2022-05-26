@@ -43,6 +43,7 @@ async function run() {
         const bookingCollection = client.db("credible_technologies").collection('bookings');
         const userCollection = client.db("credible_technologies").collection('users');
         const reviewCollection = client.db("credible_technologies").collection('reviews');
+        const paymentCollection = client.db("credible_technologies").collection('payments');
 
         app.get("/all-products", async (req, res) => {
 
@@ -281,6 +282,21 @@ async function run() {
 
         });
 
+        app.patch('/payment/:id', verifyJWT, async (req, res) => {
+            const id = req.params.id;
+            const payment = req.body;
+            const filter = { _id: ObjectId(id) };
+            const updatedDoc = {
+                $set: {
+                    paid: true,
+                    transactionId: payment.transactionId
+                }
+            }
+
+            const result = await paymentCollection.insertOne(payment);
+            const updatedBooking = await bookingCollection.updateOne(filter, updatedDoc);
+            res.send(updatedBooking);
+        });
     }
     finally {
 
