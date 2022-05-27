@@ -190,7 +190,7 @@ async function run() {
 
             const user = await userCollection.findOne({ email: email });
 
-            const isAdmin = user.role === 'admin';
+            const isAdmin = user?.role === 'admin';
 
             res.send({ admin: isAdmin })
 
